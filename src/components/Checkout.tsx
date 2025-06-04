@@ -1,6 +1,5 @@
-
 import { useState } from 'react';
-import { CreditCard, Mail, MapPin, User } from 'lucide-react';
+import { CreditCard, Mail, MapPin, User, AlertCircle } from 'lucide-react';
 import { Product } from '../types';
 
 interface CheckoutProps {
@@ -21,6 +20,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
     cvv: '',
   });
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const total = items.reduce((sum, item) => sum + item.price, 0);
 
@@ -34,43 +34,14 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
+    setShowError(false);
 
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Send to Discord webhook (replace with actual webhook URL)
-    const webhookData = {
-      content: "🛒 **Neue Bestellung erhalten!**",
-      embeds: [{
-        title: "Bestelldetails",
-        color: 16001880, // Pink color
-        fields: [
-          { name: "Kunde", value: formData.name, inline: true },
-          { name: "E-Mail", value: formData.email, inline: true },
-          { name: "Adresse", value: `${formData.address}, ${formData.zipCode} ${formData.city}`, inline: false },
-          { name: "Artikel", value: items.map(item => `${item.name} - €${item.price}`).join('\n'), inline: false },
-          { name: "Gesamtsumme", value: `€${total.toFixed(2)}`, inline: true },
-        ],
-        timestamp: new Date().toISOString(),
-      }]
-    };
-
-    try {
-      // Replace 'YOUR_DISCORD_WEBHOOK_URL' with actual webhook URL
-      const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';
-      if (webhookUrl !== 'YOUR_DISCORD_WEBHOOK_URL') {
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(webhookData),
-        });
-      }
-    } catch (error) {
-      console.error('Error sending to Discord:', error);
-    }
-
+    // Show error message
     setIsProcessing(false);
-    onOrderComplete();
+    setShowError(true);
   };
 
   return (
@@ -119,6 +90,17 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
 
         {/* Payment Form */}
         <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-xl p-8 border border-purple-500/20">
+          {/* Error Message */}
+          {showError && (
+            <div className="mb-6 bg-red-900/30 border border-red-500/50 rounded-lg p-4 flex items-center gap-3 animate-fade-in">
+              <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0" />
+              <div>
+                <h4 className="text-red-300 font-semibold">Error 408 Request Timeout</h4>
+                <p className="text-red-200 text-sm">Die Zahlung konnte nicht verarbeitet werden. Bitte versuchen Sie es erneut.</p>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <h3 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
               <User className="w-6 h-6 text-purple-400" />
