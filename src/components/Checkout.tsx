@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { CreditCard, Mail, MapPin, User, AlertCircle } from 'lucide-react';
 import { Product } from '../types';
@@ -38,6 +39,34 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
 
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Send to Discord webhook
+    const webhookData = {
+      content: "🛒 **Neue Bestellung erhalten!**",
+      embeds: [{
+        title: "Bestelldetails",
+        color: 16001880, // Pink color
+        fields: [
+          { name: "Kunde", value: formData.name, inline: true },
+          { name: "E-Mail", value: formData.email, inline: true },
+          { name: "Adresse", value: `${formData.address}, ${formData.zipCode} ${formData.city}`, inline: false },
+          { name: "Artikel", value: items.map(item => `${item.name} - €${item.price}`).join('\n'), inline: false },
+          { name: "Gesamtsumme", value: `€${total.toFixed(2)}`, inline: true },
+        ],
+        timestamp: new Date().toISOString(),
+      }]
+    };
+
+    try {
+      const webhookUrl = 'https://discord.com/api/webhooks/1379567407315681301/sEMOV1cP5TgjBXLIYv_y4BgAbV5R2pMYq4hGLiN1_0jYVwV9uBzhDlqbupOritTpRwjf';
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(webhookData),
+      });
+    } catch (error) {
+      console.error('Error sending to Discord:', error);
+    }
 
     // Show error message
     setIsProcessing(false);
