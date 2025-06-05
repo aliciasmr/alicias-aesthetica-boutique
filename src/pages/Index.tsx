@@ -110,8 +110,8 @@ const Index = () => {
       {/* Cart Notification */}
       {showCart && (
         <div className="fixed top-4 right-4 bg-pink-600 text-white px-6 py-3 rounded-lg shadow-lg animate-slide-in-right z-50">
-          <p className="font-semibold">Zum Warenkorb hinzugefügt!</p>
-          <p className="text-sm opacity-90">{cartItems.length} Artikel im Warenkorb</p>
+          <p className="font-semibold">Added to cart!</p>
+          <p className="text-sm opacity-90">{cartItems.length} items in cart</p>
         </div>
       )}
     </div>
@@ -134,37 +134,43 @@ const ProductGrid = ({
 }) => {
   const products: Product[] = [
     { 
-      name: `Premium ${category === 'videos' ? 'Video' : 'Foto'} Set 1`, 
+      name: `FREE ${category === 'videos' ? 'Video' : 'Photo'} Starter Pack`, 
+      price: 0, 
+      preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
+      type: category 
+    },
+    { 
+      name: `Premium ${category === 'videos' ? 'Video' : 'Photo'} Set 1`, 
       price: 29.99, 
       preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
       type: category 
     },
     { 
-      name: `Exclusive ${category === 'videos' ? 'Video' : 'Foto'} Set 2`, 
+      name: `Exclusive ${category === 'videos' ? 'Video' : 'Photo'} Set 2`, 
       price: 39.99, 
       preview: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop',
       type: category 
     },
     { 
-      name: `VIP ${category === 'videos' ? 'Video' : 'Foto'} Set 3`, 
+      name: `VIP ${category === 'videos' ? 'Video' : 'Photo'} Set 3`, 
       price: 49.99, 
       preview: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=400&fit=crop',
       type: category 
     },
     { 
-      name: `Deluxe ${category === 'videos' ? 'Video' : 'Foto'} Set 4`, 
+      name: `Deluxe ${category === 'videos' ? 'Video' : 'Photo'} Set 4`, 
       price: 59.99, 
       preview: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop',
       type: category 
     },
     { 
-      name: `Ultimate ${category === 'videos' ? 'Video' : 'Foto'} Set 5`, 
+      name: `Ultimate ${category === 'videos' ? 'Video' : 'Photo'} Set 5`, 
       price: 69.99, 
       preview: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=400&fit=crop',
       type: category 
     },
     { 
-      name: `Platinum ${category === 'videos' ? 'Video' : 'Foto'} Set 6`, 
+      name: `Platinum ${category === 'videos' ? 'Video' : 'Photo'} Set 6`, 
       price: 79.99, 
       preview: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop',
       type: category 
@@ -179,16 +185,16 @@ const ProductGrid = ({
           onClick={onGoBack}
           className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
         >
-          ← Zurück
+          ← Back
         </button>
         <h2 className="text-4xl font-bold text-white text-center bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-          {category === 'videos' ? 'Video' : 'Foto'} Kollektion
+          {category === 'videos' ? 'Video' : 'Photo'} Collection
         </h2>
         <button
           onClick={onGoToCart}
           className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 relative"
         >
-          Warenkorb ({cartItemsCount})
+          Cart ({cartItemsCount})
           {cartItemsCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
               {cartItemsCount}
@@ -202,9 +208,20 @@ const ProductGrid = ({
         {products.map((product, index) => (
           <div
             key={index}
-            className="group relative bg-gradient-to-br from-pink-900/20 to-purple-900/20 backdrop-blur-sm rounded-xl p-6 border border-pink-500/20 hover:border-pink-400/40 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/20"
+            className={`group relative backdrop-blur-sm rounded-xl p-6 border transition-all duration-500 hover:scale-105 hover:shadow-2xl ${
+              product.price === 0 
+                ? 'bg-gradient-to-br from-green-900/20 to-emerald-900/20 border-green-500/20 hover:border-green-400/40 hover:shadow-green-500/20' 
+                : 'bg-gradient-to-br from-pink-900/20 to-purple-900/20 border-pink-500/20 hover:border-pink-400/40 hover:shadow-pink-500/20'
+            }`}
             style={{ animationDelay: `${index * 100}ms` }}
           >
+            {/* FREE Badge */}
+            {product.price === 0 && (
+              <div className="absolute -top-3 -right-3 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">
+                FREE
+              </div>
+            )}
+            
             {/* Preview Image */}
             <div className="relative overflow-hidden rounded-lg mb-4">
               <div
@@ -218,26 +235,41 @@ const ProductGrid = ({
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-white text-center">
                   <div className="text-6xl mb-2">🔒</div>
-                  <p className="text-sm font-semibold">Vorschau</p>
+                  <p className="text-sm font-semibold">Preview</p>
                 </div>
               </div>
-              <div className="absolute top-2 right-2 bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {category === 'videos' ? 'VIDEO' : 'FOTO'}
+              <div className={`absolute top-2 right-2 text-white px-3 py-1 rounded-full text-sm font-semibold ${
+                product.price === 0 ? 'bg-green-600' : 'bg-pink-600'
+              }`}>
+                {category === 'videos' ? 'VIDEO' : 'PHOTO'}
               </div>
             </div>
 
             {/* Product Info */}
-            <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-pink-300 transition-colors duration-300">
+            <h3 className={`text-xl font-semibold text-white mb-2 group-hover:transition-colors duration-300 ${
+              product.price === 0 ? 'group-hover:text-green-300' : 'group-hover:text-pink-300'
+            }`}>
               {product.name}
             </h3>
-            <p className="text-3xl font-bold text-pink-400 mb-4">€{product.price}</p>
+            {product.price === 0 ? (
+              <div className="mb-4">
+                <p className="text-3xl font-bold text-green-400 mb-2">FREE</p>
+                <p className="text-sm text-green-200">Credit card required to prevent bots</p>
+              </div>
+            ) : (
+              <p className="text-3xl font-bold text-pink-400 mb-4">€{product.price}</p>
+            )}
             
             {/* Add to Cart Button */}
             <button
               onClick={() => onAddToCart(product)}
-              className="w-full bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+              className={`w-full text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
+                product.price === 0 
+                  ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700' 
+                  : 'bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700'
+              }`}
             >
-              In den Warenkorb
+              {product.price === 0 ? 'Get Free Set' : 'Add to Cart'}
             </button>
           </div>
         ))}

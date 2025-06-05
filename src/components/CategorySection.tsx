@@ -1,8 +1,11 @@
+
 import { Video, Camera } from 'lucide-react';
+
 interface CategorySectionProps {
   onSelectCategory: (category: 'videos' | 'photos') => void;
   onGoBack: () => void;
 }
+
 const CategorySection = ({
   onSelectCategory,
   onGoBack
@@ -10,14 +13,14 @@ const CategorySection = ({
   return <div className="min-h-screen flex flex-col justify-center items-center p-8 animate-fade-in">
       {/* Back Button */}
       <button onClick={onGoBack} className="absolute top-8 left-8 bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105">
-        ← Zurück
+        ← Back
       </button>
 
       {/* Title */}
       <h2 className="text-6xl font-bold text-white mb-4 text-center bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent animate-scale-in">
-        Wähle deine Kategorie
+        Choose Your Category
       </h2>
-      <p className="text-xl text-pink-200 mb-16 text-center max-w-2xl">Entdecke meine geilen Bilder und Videos</p>
+      <p className="text-xl text-pink-200 mb-16 text-center max-w-2xl">Discover my exclusive photos and videos</p>
 
       {/* Category Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl w-full">
@@ -34,10 +37,10 @@ const CategorySection = ({
               Videos
             </h3>
             <p className="text-lg text-pink-200 mb-6">
-              Hochwertige Video-Inhalte in Premium-Qualität
+              Premium quality video content in exclusive sets
             </p>
             <div className="inline-block bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold group-hover:bg-pink-500 transition-colors duration-300">
-              6 Exklusive Sets
+              7 Exclusive Sets
             </div>
           </div>
 
@@ -57,13 +60,13 @@ const CategorySection = ({
               <Camera className="w-24 h-24 text-purple-400 mx-auto group-hover:text-purple-300" />
             </div>
             <h3 className="text-4xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">
-              Fotos
+              Photos
             </h3>
             <p className="text-lg text-purple-200 mb-6">
-              Atemberaubende Foto-Sets in höchster Auflösung
+              Stunning photo sets in highest resolution
             </p>
             <div className="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold group-hover:bg-purple-500 transition-colors duration-300">
-              6 Exklusive Sets
+              7 Exclusive Sets
             </div>
           </div>
 
@@ -85,4 +88,5 @@ const CategorySection = ({
       </div>
     </div>;
 };
+
 export default CategorySection;
