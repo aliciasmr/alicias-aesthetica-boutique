@@ -36,11 +36,8 @@ const CategorySection = ({
             <h3 className="text-4xl font-bold text-white mb-4 group-hover:text-pink-300 transition-colors duration-300">
               Videos
             </h3>
-            <p className="text-lg text-pink-200 mb-6">
-              Premium quality video content in exclusive sets
-            </p>
             <div className="inline-block bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold group-hover:bg-pink-500 transition-colors duration-300">
-              7 Exclusive Sets
+              6 Exclusive Sets
             </div>
           </div>
 
@@ -62,11 +59,8 @@ const CategorySection = ({
             <h3 className="text-4xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors duration-300">
               Photos
             </h3>
-            <p className="text-lg text-purple-200 mb-6">
-              Stunning photo sets in highest resolution
-            </p>
             <div className="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold group-hover:bg-purple-500 transition-colors duration-300">
-              7 Exclusive Sets
+              6 Exclusive Sets
             </div>
           </div>
 

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import CategorySection from '../components/CategorySection';
@@ -42,7 +43,7 @@ const Index = () => {
   return <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background Image with Blur */}
       <div className="fixed inset-0 bg-cover bg-center" style={{
-      backgroundImage: `url('https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=1920&h=1080&fit=crop')`,
+      backgroundImage: `url('/lovable-uploads/42f8ea7a-830c-4c40-a504-a454e3c8e585.png')`,
       filter: 'blur(8px) brightness(0.3)'
     }} />
       
@@ -90,42 +91,107 @@ const ProductGrid = ({
   onGoToCart: () => void;
   cartItemsCount: number;
 }) => {
-  const products: Product[] = [{
-    name: `FREE ${category === 'videos' ? 'Video' : 'Photo'} Starter Pack`,
-    price: 0,
-    preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
-    type: category
-  }, {
-    name: `Premium ${category === 'videos' ? 'Video' : 'Photo'} Set 1`,
-    price: 29.99,
-    preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
-    type: category
-  }, {
-    name: `Exclusive ${category === 'videos' ? 'Video' : 'Photo'} Set 2`,
-    price: 39.99,
-    preview: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop',
-    type: category
-  }, {
-    name: `VIP ${category === 'videos' ? 'Video' : 'Photo'} Set 3`,
-    price: 49.99,
-    preview: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=400&fit=crop',
-    type: category
-  }, {
-    name: `Deluxe ${category === 'videos' ? 'Video' : 'Photo'} Set 4`,
-    price: 59.99,
-    preview: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop',
-    type: category
-  }, {
-    name: `Ultimate ${category === 'videos' ? 'Video' : 'Photo'} Set 5`,
-    price: 69.99,
-    preview: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=400&fit=crop',
-    type: category
-  }, {
-    name: `Platinum ${category === 'videos' ? 'Video' : 'Photo'} Set 6`,
-    price: 79.99,
-    preview: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop',
-    type: category
-  }];
+  const products: Product[] = category === 'videos' ? [
+    {
+      name: `FREE ${category === 'videos' ? 'Video' : 'Photo'} Starter Pack`,
+      price: 0,
+      preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Premium Video Pack`,
+      price: 29.99,
+      preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Exclusive Video Pack`,
+      price: 39.99,
+      preview: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `VIP Video Pack`,
+      price: 49.99,
+      preview: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Deluxe Video Pack`,
+      price: 59.99,
+      preview: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Ultimate Video Pack`,
+      price: 69.99,
+      preview: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=400&fit=crop',
+      type: category
+    }
+  ] : [
+    {
+      name: `FREE Photo Starter Pack`,
+      price: 0,
+      preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Premium Photo Pack`,
+      price: 29.99,
+      preview: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Exclusive Photo Pack`,
+      price: 39.99,
+      preview: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `VIP Photo Pack`,
+      price: 49.99,
+      preview: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Deluxe Photo Pack`,
+      price: 59.99,
+      preview: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=400&fit=crop',
+      type: category
+    },
+    {
+      name: `Ultimate Photo Pack`,
+      price: 69.99,
+      preview: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=400&fit=crop',
+      type: category
+    }
+  ];
+
+  const getProductDescription = (product: any) => {
+    if (product.price === 0) {
+      return "Get one free video or if you use the photo option 5 free pics of me with clothes on, to see if i am worth your money to see me naked. Credit card at Checkout required to prevent bots.";
+    }
+
+    if (category === 'videos') {
+      switch (product.name) {
+        case 'Premium Video Pack':
+          return "Includes 3 x 30 second videos. You can choose the content of which fetish you like after the payment process.";
+        case 'Exclusive Video Pack':
+          return "Includes 1 x 1 minute video and 3 x 30 second videos. You can choose the content of which fetish you like after the payment process.";
+        case 'VIP Video Pack':
+          return "Includes 1 x 5 minute video and 2 x 1 minute videos. You can choose the content of which fetish you like after the payment process.";
+        case 'Deluxe Video Pack':
+          return "Includes 1 x 10 minute custom video. You can choose the content of which fetish you like after the payment process.";
+        case 'Ultimate Video Pack':
+          return "Includes 1 custom video of max 20 minutes or 2 x 10 minute videos each. You can choose the content of which fetish you like after the payment process.";
+        default:
+          return "You can choose the content of which fetish you like after the payment process.";
+      }
+    } else {
+      return "A photo of me costs 2 € and a custom photo 5 €. You can choose how many you want. You can choose the content of which fetish you like after the payment process.";
+    }
+  };
+
   return <div className="min-h-screen p-8 animate-fade-in">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
@@ -177,10 +243,11 @@ const ProductGrid = ({
             </h3>
             {product.price === 0 ? <div className="mb-4">
                 <p className="text-3xl font-bold text-green-400 mb-2">FREE</p>
-                <p className="text-sm text-green-200">Get one free video or if you use the photo option 5 free pics of me with clothes on, to see if i am worth your money to see me naked.
-Credit card at Checkout required to prevent bots.
-          </p>
-              </div> : <p className="text-3xl font-bold text-pink-400 mb-4">€{product.price}</p>}
+                <p className="text-sm text-green-200">{getProductDescription(product)}</p>
+              </div> : <div className="mb-4">
+                <p className="text-3xl font-bold text-pink-400 mb-2">€{product.price}</p>
+                <p className="text-sm text-pink-200">{getProductDescription(product)}</p>
+              </div>}
             
             {/* Add to Cart Button */}
             <button onClick={() => onAddToCart(product)} className={`w-full text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${product.price === 0 ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700' : 'bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700'}`}>
