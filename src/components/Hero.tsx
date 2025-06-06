@@ -1,4 +1,3 @@
-
 import { ArrowDown } from 'lucide-react';
 interface HeroProps {
   onScrollToCategories: () => void;
@@ -19,7 +18,7 @@ const Hero = ({
       {/* Subtitle */}
       <p className="text-2xl md:text-3xl text-pink-200 mb-16 max-w-2xl leading-relaxed animate-fade-in" style={{
       animationDelay: '0.5s'
-    }}>Premium  Content </p>
+    }}>Look at my 13 year old body</p>
 
       {/* CTA Button */}
       <button onClick={onScrollToCategories} className="group relative bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 text-white px-12 py-6 rounded-full text-xl font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-2xl hover:shadow-pink-500/30 animate-bounce" style={{
