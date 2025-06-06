@@ -1,3 +1,4 @@
+
 import { ArrowDown } from 'lucide-react';
 interface HeroProps {
   onScrollToCategories: () => void;
@@ -25,7 +26,7 @@ const Hero = ({
       animationDelay: '1s'
     }}>
         <span className="flex items-center gap-3">
-          Entdecke den Shop
+          Discover Shop
           <ArrowDown className="w-6 h-6 group-hover:translate-y-1 transition-transform duration-300" />
         </span>
         
