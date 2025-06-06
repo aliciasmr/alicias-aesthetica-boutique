@@ -177,8 +177,8 @@ const ProductGrid = ({
             </h3>
             {product.price === 0 ? <div className="mb-4">
                 <p className="text-3xl font-bold text-green-400 mb-2">FREE</p>
-                <p className="text-sm text-green-200">Get one free video of me with clothes to validate my other nude options.
-Credit card required to prevent bots.
+                <p className="text-sm text-green-200">Get one free video or if you use the photo option 5 free pics of me with clothes on, to see if i am worth your money to see me naked.
+Credit card at Checkout required to prevent bots.
           </p>
               </div> : <p className="text-3xl font-bold text-pink-400 mb-4">€{product.price}</p>}
             
